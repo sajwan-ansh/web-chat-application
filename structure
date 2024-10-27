@@ -1,0 +1,8 @@
+src/main/java/com/webchat-application
+├── controller
+├── dao
+├── model
+├── service
+└── utils
+src/main/resources
+└── application.properties (for configuration)
