@@ -1,10 +1,10 @@
-package util;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-public class DatabaseConnection {
+// Utility class to handle database connection
+class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/ProjectDB";
     private static final String USER = "root";
     private static final String PASSWORD = "your_password";
@@ -13,3 +13,109 @@ public class DatabaseConnection {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
+
+// Model class representing a User
+class User {
+    private int id;
+    private String name;
+    private String email;
+
+    public User(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{id=" + id + ", name='" + name + "', email='" + email + "'}";
+    }
+}
+
+// Data Access Object (DAO) for User-related database operations
+class UserDao {
+    public void addUser(User user) {
+        String sql = "INSERT INTO Users (name, email) VALUES (?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.executeUpdate();
+            System.out.println("User added successfully.");
+
+        } catch (SQLException e) {
+            System.out.println("Error adding user: " + e.getMessage());
+        }
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM Users";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                users.add(new User(id, name, email));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving users: " + e.getMessage());
+        }
+
+        return users;
+    }
+}
+
+// Main application class
+public class Main {
+    public static void main(String[] args) {
+        UserDao userDao = new UserDao();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Choose an option:");
+        System.out.println("1. Add a user");
+        System.out.println("2. List all users");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter name: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter email: ");
+                String email = scanner.nextLine();
+                User newUser = new User(0, name, email);
+                userDao.addUser(newUser);
+                break;
+            case 2:
+                List<User> users = userDao.getAllUsers();
+                System.out.println("User List:");
+                for (User user : users) {
+                    System.out.println(user);
+                }
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+}
+
