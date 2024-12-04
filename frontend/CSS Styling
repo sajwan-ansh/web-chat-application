@@ -1,0 +1,23 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 400px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    padding: 10px;
+}
+
+.btn {
+    margin-top: 15px;
+}
+
+#error-message {
+    margin-top: 10px;
+}
