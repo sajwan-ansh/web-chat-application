@@ -1,23 +1,93 @@
+/* Global Styles */
 body {
-    background-color: #f8f9fa;
-}
-
-.container {
-    max-width: 400px;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    color: #333;
 }
 
 h2 {
-    margin-bottom: 20px;
+    color: #fff;
 }
 
-.form-control {
+/* Form Styling */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    padding: 20px;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    border: 2px solid #ddd;
+    border-radius: 5px;
     padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out;
 }
 
-.btn {
-    margin-top: 15px;
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #4facfe;
+    box-shadow: 0 0 5px rgba(79, 172, 254, 0.8);
 }
 
+/* Button Styling */
+button {
+    background-color: #4facfe;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #00f2fe;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Error Message Styling */
 #error-message {
-    margin-top: 10px;
+    font-size: 14px;
+    color: #f44336;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 576px) {
+    .container {
+        margin-top: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+    }
 }
